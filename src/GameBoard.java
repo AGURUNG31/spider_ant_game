@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class GridBoardView {
+public class GameBoard {
 
     private static String[][] grid = new String[8][8];
     private int antRow;
@@ -12,7 +12,7 @@ public class GridBoardView {
 
     private enum AntDirection {UP, DOWN, LEFT, RIGHT}
 
-    public GridBoardView(int antRow, int antCol, int spiderRow, int spiderCol) {
+    public GameBoard(int antRow, int antCol, int spiderRow, int spiderCol) {
         this.antRow = antRow;
         this.antCol = antCol;
         this.spiderRow = spiderRow;
@@ -22,7 +22,7 @@ public class GridBoardView {
         System.out.println("Ant created, it will move in `" + antDirection.name() + "` direction.");
     }
 
-    void update(int antRow, int antCol, int spiderRow, int spiderCol) {
+    void updateLocations(int antRow, int antCol, int spiderRow, int spiderCol) {
         System.out.println("Spider and Ant moved");
         this.antRow = antRow;
         this.antCol = antCol;
@@ -67,7 +67,7 @@ public class GridBoardView {
         }
     }
 
-    public boolean spiderCatchesAnt() {
+    public boolean hasSpiderCaughtAnt() {
         if ((this.spiderRow == this.antRow) && (this.spiderCol == this.antCol)) {
             return true;
         }
@@ -83,30 +83,30 @@ public class GridBoardView {
         System.out.println("Ant location Col = " + this.antCol);
     }
 
-    public GridBoardPosition antNextMove() {
-        GridBoardPosition nextMove = null;
+    public BoardPosition antNextMove() {
+        BoardPosition nextMove = null;
         switch (antDirection) {
             case UP: {
-                if (GridBoardPosition.isValidCoordinate(antRow - 1, antCol)) {
-                    nextMove = new GridBoardPosition(antRow - 1, antCol);
+                if (BoardPosition.isValidCoordinate(antRow - 1, antCol)) {
+                    nextMove = new BoardPosition(antRow - 1, antCol);
                 }
                 break;
             }
             case DOWN: {
-                if (GridBoardPosition.isValidCoordinate(antRow + 1, antCol)) {
-                    nextMove = new GridBoardPosition(antRow + 1, antCol);
+                if (BoardPosition.isValidCoordinate(antRow + 1, antCol)) {
+                    nextMove = new BoardPosition(antRow + 1, antCol);
                 }
                 break;
             }
             case LEFT: {
-                if (GridBoardPosition.isValidCoordinate(antRow, antCol - 1)) {
-                    nextMove = new GridBoardPosition(antRow, antCol - 1);
+                if (BoardPosition.isValidCoordinate(antRow, antCol - 1)) {
+                    nextMove = new BoardPosition(antRow, antCol - 1);
                 }
                 break;
             }
             case RIGHT: {
-                if (GridBoardPosition.isValidCoordinate(antRow, antCol + 1)) {
-                    nextMove = new GridBoardPosition(antRow, antCol + 1);
+                if (BoardPosition.isValidCoordinate(antRow, antCol + 1)) {
+                    nextMove = new BoardPosition(antRow, antCol + 1);
                 }
                 break;
             }
