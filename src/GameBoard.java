@@ -8,6 +8,7 @@ public class GameBoard {
 
     private int spiderRow;
     private int spiderCol;
+
     private AntDirection antDirection;
 
     private enum AntDirection {UP, DOWN, LEFT, RIGHT}

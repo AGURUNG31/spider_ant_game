@@ -1,5 +1,8 @@
 import java.util.*;
 
+/**
+ * Created by abhinav on 2019-02-09.
+ */
 class ShortestPath {
 
     private BoardPosition startPos;
@@ -12,22 +15,21 @@ class ShortestPath {
         this.spider = spider;
     }
 
-    //Prints out the shortest path in terms of the steps of the shortest path, excluding the starting position
-    String bfs() {
+    List<String> bfs() {
         //Keep track of visited nodes and the parents of visited nodes (for finding the shortest path)
         HashMap<BoardPosition, BoardPosition> parentNode = new HashMap<>();
 
         //Queue of nodes to visit
-        Queue<BoardPosition> positionQueue = new LinkedList<>();
+        Queue<BoardPosition> queue = new LinkedList<>();
 
         //initially add the starting node
         parentNode.put(startPos, null);
-        positionQueue.add(startPos);
+        queue.add(startPos);
 
         //Breadth first search
-        while (positionQueue.peek() != null) //check if anymore nodes to visit
+        while (queue.peek() != null) //check if anymore nodes to visit
         {
-            BoardPosition currentPosition = positionQueue.poll();
+            BoardPosition currentPosition = queue.poll();
 
             if (currentPosition.equals(endPos)) {
                 break; //we have reached the end position on the graph via the shortest path so stop searching
@@ -40,7 +42,7 @@ class ShortestPath {
                 //also keep track of the adjacent node's parent (the current node)
                 if (!parentNode.containsKey(adjacentPosition)) {
                     parentNode.put(adjacentPosition, currentPosition);
-                    positionQueue.add(adjacentPosition);
+                    queue.add(adjacentPosition);
                 }
             }
         }
@@ -60,8 +62,9 @@ class ShortestPath {
             shortestPath = startPos.toString();
         }
 
+        System.out.println("ShortestPath = " + shortestPath.trim());
         //Print out the shortest path found, excluding start position and including end position
-        return shortestPath.trim();
+        return Arrays.asList(shortestPath.trim().split(" "));
     }
 
 }

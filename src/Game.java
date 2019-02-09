@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -7,11 +6,9 @@ import java.util.List;
 public class Game {
 
     public static void main(String[] args) {
-        String spiderLoc = "E1";
-        String antLoc = "A7";
-
-        BoardPosition antPos = new BoardPosition(antLoc);
-        BoardPosition spiderPos = new BoardPosition(spiderLoc);
+        
+        BoardPosition antPos = new BoardPosition();
+        BoardPosition spiderPos = new BoardPosition();
 
         GameBoard gameBoard = new GameBoard(antPos.x, antPos.y, spiderPos.x, spiderPos.y);
 
@@ -25,9 +22,7 @@ public class Game {
             gameBoard.print();
 
             ShortestPath shortestPath = new ShortestPath(spiderPos, antPos, spider);
-            String sp = shortestPath.bfs();
-            List<String> shortestPaths = Arrays.asList(sp.split(" "));
-            System.out.println("ShortestPath = " + sp);
+            List<String> shortestPaths = shortestPath.bfs();
 
             List<String> spiderLegalMovesString = spider.validMoves(spiderPos);
             String spiderNextMove = spider.nextMove(shortestPaths, spiderLegalMovesString);

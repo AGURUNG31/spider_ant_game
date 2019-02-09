@@ -1,7 +1,22 @@
+import java.util.Random;
+
 /**
  * // BoardPosition provides an abstraction for valid chess position on a square chess board of square BOARD_SIZE
  */
 class BoardPosition {
+
+    public int x;
+    public int y;
+    public static int BOARD_SIZE = 8;
+
+    /**
+     * Assumes the x and y are generated randomly
+     */
+    BoardPosition(){
+        x = getRandom();
+        y = getRandom();
+    }
+
     //Maps the integer horizontal co-ordinates to constant letter representations from algebra co-ordinates
     private enum AlgebraicXCoordinate {
         A(1), B(2), C(3), D(4), E(5), F(6), G(7), H(8);
@@ -28,11 +43,6 @@ class BoardPosition {
         }
     }
 
-    public int x; //horizontal coordinate
-    public int y; //vertical coordinate
-
-    public static int BOARD_SIZE = 8; //size of one side of the square chessboard
-
     //Throws IllegalArgumentException if invalid co-ordinate range
     public BoardPosition(int xCoordinate, int yCoordinate) throws IllegalArgumentException {
         if (isValidCoordinate(xCoordinate, yCoordinate)) {
@@ -43,8 +53,6 @@ class BoardPosition {
         }
     }
 
-    //Constructor for a position coordinate from algebraic chess notation (eg. A8 => x=1,y=8 , B2 => x=2,y=2 ...)
-    //Throws IllegalArgumentException if an invalid algebraic chess notation is provided
     public BoardPosition(String algebraCoordinate) throws IllegalArgumentException {
         if (algebraCoordinate.length() == 2) {
             try {
@@ -88,7 +96,6 @@ class BoardPosition {
 
     //Allows for storage of class in Hash based collections
     //Builds a unique int as the hashcode based on concatenating the string representation of each part of the coordinate
-    //
     //Returns int that is unique for each BoardPosition
     public int hashCode() {
         String xString = String.valueOf(this.x);
@@ -97,11 +104,17 @@ class BoardPosition {
         return Integer.parseInt(stringCoordinate);
     }
 
-    //Return the algebraic notation of the object's chess co-ordinate
+
     public String toString() {
         String xCoordinate = AlgebraicXCoordinate.fromInt(this.x).name();
         String yCoordinate = String.valueOf(this.y);
         return (xCoordinate + yCoordinate);
+    }
+
+    static int getRandom() {
+        int max = 8;
+        int min = 1;
+        return new Random().nextInt((max - min) + 1) + min;
     }
 
 }
