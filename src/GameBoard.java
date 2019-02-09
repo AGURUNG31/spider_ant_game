@@ -53,8 +53,8 @@ public class GameBoard {
 
     //gives a random number between 0 and 7 inclusive
     static int giveRandomCoordinate() {
-        int max = 7;
-        int min = 0;
+        int max = 8;
+        int min = 1;
         return new Random().nextInt((max - min) + 1) + min;
     }
 
