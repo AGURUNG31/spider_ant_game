@@ -17,6 +17,7 @@ class ShortestPath {
 
     List<String> bfs() {
         //Keep track of visited nodes and the parents of visited nodes (for finding the shortest path)
+        //to hold <parent, child>
         HashMap<BoardPosition, BoardPosition> parentNode = new HashMap<>();
 
         //Queue of nodes to visit
@@ -66,12 +67,12 @@ class ShortestPath {
             shortestPath = startPos.toString();
         }
 
-        System.out.println("ShortestPath BFS = " + shortestPath.trim());
+        System.out.println("ShortestPath BFS(next step) from  "+ startPos +" to " + endPos+ " = " + shortestPath.trim());
 //        System.out.println("-------------------------------");
 //        for(BoardPosition key:parentNode.keySet()){
 //            System.out.println(key +"-->"+ parentNode.get(key) );
 //        }
-        //Print out the shortest path found, excluding start position and including end position
+        // the shortest path found, excluding start position and including end position
         return Arrays.asList(shortestPath.trim().split(" "));
 
 
@@ -94,7 +95,7 @@ class ShortestPath {
             BoardPosition currentPosition = stack.pop();
 
             if (currentPosition.equals(endPos)) {
-                break; //we have reached the end position on the graph via the shortest path so stop searching
+                break;
             }
 
 

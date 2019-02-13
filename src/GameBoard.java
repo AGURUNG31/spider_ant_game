@@ -20,11 +20,11 @@ public class GameBoard {
         this.spiderCol = spiderCol;
         updateGrid();
         this.antDirection = randomDirection();
-        System.out.println("Ant created, it will move in `" + antDirection.name() + "` direction.");
+        System.out.println("Ant created, it will move in `" + antDirection.name() + "` direction for this lifecycle");
     }
 
     void updateLocations(int antRow, int antCol, int spiderRow, int spiderCol) {
-        System.out.println("Spider and Ant moved");
+        System.out.println("Spider and Ant moved--updating locations");
         this.antRow = antRow;
         this.antCol = antCol;
         this.spiderRow = spiderRow;
@@ -36,6 +36,9 @@ public class GameBoard {
         return AntDirection.values()[new Random().nextInt(4)];
     }
 
+    /**
+     * update the grid elements
+     */
     private void updateGrid() {
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
@@ -58,6 +61,9 @@ public class GameBoard {
         return new Random().nextInt((max - min) + 1) + min;
     }
 
+    /**
+     * print the grid contents to console
+     */
     public void print() {
 
         for (int row = 0; row < 8; row++) {
@@ -68,6 +74,10 @@ public class GameBoard {
         }
     }
 
+    /**
+     * returns true if spider and ant location is same
+     * @return a boolean
+     */
     public boolean hasSpiderCaughtAnt() {
         if ((this.spiderRow == this.antRow) && (this.spiderCol == this.antCol)) {
             return true;
@@ -75,11 +85,14 @@ public class GameBoard {
         return false;
     }
 
+    /**
+     * gives a new ant with a new location
+     */
     void resetAnt() {
         this.antRow = giveRandomCoordinate();
         this.antCol = giveRandomCoordinate();
         this.antDirection = randomDirection();
-        System.out.println("Ant reset, it will move in `" + antDirection.name() + "` direction.");
+        System.out.println("Ant is reset, it will move in `" + antDirection.name() + "` direction.");
         System.out.println("Ant location Row = " + this.antRow);
         System.out.println("Ant location Col = " + this.antCol);
     }

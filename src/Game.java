@@ -22,7 +22,7 @@ public class Game {
 //        BoardPosition spiderPos = new BoardPosition(spiderLoc);
 
         //Ant and Spider get initiated at random positions
-        BoardPosition antPos = new BoardPosition();
+        BoardPosition antPos = new BoardPosition(); //antPos gets x,y as their attributes
         BoardPosition spiderPos = new BoardPosition();
 
         GameBoard gameBoard = new GameBoard(antPos.x, antPos.y, spiderPos.x, spiderPos.y);
@@ -54,8 +54,10 @@ public class Game {
                     throw new RuntimeException("A* not implemented");
             }
 
-            List<String> spiderLegalMovesString = spider.validMoves(spiderPos);
+            List<String> spiderLegalMovesString = spider.validMoves(spiderPos); //get all legal moves of spider
             String spiderNextMove = spider.nextMove(shortestPaths, spiderLegalMovesString);
+
+            //System.out.println("\n"+shortestPaths);//for debug purpose
             System.out.println("\nSpiders next move = " + spiderNextMove);
 
 //            spiderPos = new BoardPosition(spiderNextMove);

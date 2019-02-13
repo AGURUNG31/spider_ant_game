@@ -6,6 +6,8 @@ import java.util.*;
 
 class Spider {
 
+    public Spider(){} //default constructor
+
     /**
      * given a position of the spider, it gives all the valid position of the spider within the board
      * @param startPosition of type BoardPosition
@@ -53,10 +55,11 @@ class Spider {
         return validCoordinates;
     }
 
+
     public String nextMove(List<String> shortestPath, List<String> spiderValidMoves) {
         String toLocation = null;
-        for (String path : shortestPath) {
-            if (spiderValidMoves.contains(path)) {
+        for (String path : shortestPath) {//go through each element of the shortest path calculated by bfs
+            if (spiderValidMoves.contains(path)) { //if one of the spider valid moves is the path
                 toLocation = path;
             }
         }
@@ -73,8 +76,8 @@ class Spider {
         System.out.print("Spiders legal valid moves = ");
 
         for (BoardPosition cc : spiderMoves) {
-            spiderLegalMovesString.add(cc.toString());
-            System.out.print(cc.toString() + " ");
+            spiderLegalMovesString.add(cc.toString()); // add all the valid moves to this arraylist
+            System.out.print(cc.toString() + " "); // print out the spider valid moves
         }
         return spiderLegalMovesString;
     }

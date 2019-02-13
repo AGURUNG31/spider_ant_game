@@ -20,7 +20,7 @@ class BoardPosition {
         y = getRandom();
     }
 
-    //Maps the integer horizontal co-ordinates to constant letter representations from algebra co-ordinates
+    //Maps the integer horizontal co-ordinates to constant letter representations
     private enum AlgebraicXCoordinate {
         A(1), B(2), C(3), D(4), E(5), F(6), G(7), H(8);
 
@@ -42,7 +42,7 @@ class BoardPosition {
                 }
             }
 
-            throw new IllegalArgumentException("Invalid position co-ordinate for algebraic chess notation.");
+            throw new IllegalArgumentException("Invalid position ");
         }
     }
 
@@ -52,7 +52,7 @@ class BoardPosition {
             x = xCoordinate;
             y = yCoordinate;
         } else {
-            throw new IllegalArgumentException("Invalid position co-ordinate. BoardView size is: " + BOARD_SIZE + " by " + BOARD_SIZE);
+            throw new IllegalArgumentException("Invalid position co-ordinate. BoardView size is: ");
         }
     }
 
@@ -61,31 +61,29 @@ class BoardPosition {
             try {
                 x = AlgebraicXCoordinate.valueOf(algebraCoordinate.substring(0, 1).toUpperCase()).getValue(); //Use AlgebraicXCoordinate enum
             } catch (IllegalArgumentException e) {
-                throw new IllegalArgumentException("Invalid horizontal algebraic co-ordinate. BoardView size is: " + BOARD_SIZE + " by " + BOARD_SIZE);
+                throw new IllegalArgumentException("Invalid x co-ordinate." );
             }
 
             try {
                 y = Integer.parseInt(algebraCoordinate.substring(1));
             } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("Invalid vertical position co-ordinate. BoardView size is: " + BOARD_SIZE + " by " + BOARD_SIZE);
+                throw new IllegalArgumentException("Invalid y co-ordinate. " );
             }
 
             if (!isValidCoordinate(x, y)) {
-                throw new IllegalArgumentException("Invalid algebraic position co-ordinate. BoardView size is: " + BOARD_SIZE + " by " + BOARD_SIZE);
+                throw new IllegalArgumentException("Invalid position co-ordinate." );
             }
 
         } else {
-            throw new IllegalArgumentException("Invalid algebraic position co-ordinate. BoardView size is: " + BOARD_SIZE + " by " + BOARD_SIZE);
+            throw new IllegalArgumentException("Invalid co-ordinate");
         }
     }
 
-    //Is the coordinate a valid position on the defined board size
+    //is the coordinate a valid position on the defined board size
+    //returns false if the coordinate lies outside the board boundary
     public static boolean isValidCoordinate(int xCoordinate, int yCoordinate) {
-        if (xCoordinate >= 1 && xCoordinate <= BOARD_SIZE && yCoordinate >= 1 && yCoordinate <= BOARD_SIZE) {
-            return true;
-        } else {
-            return false;
-        }
+        return ((xCoordinate >= 1) && (xCoordinate <= BOARD_SIZE) && (yCoordinate >= 1) && (yCoordinate <= BOARD_SIZE)); // evaluate this expressiona and return boolean
+
     }
 
     //When does one BoardPosition equal another BoardPosition
@@ -93,6 +91,13 @@ class BoardPosition {
     //
     //Returns boolean
     public boolean equals(Object other) {
+
+        if(other == this){
+            return true;
+        }
+        if(!(other instanceof BoardPosition)){
+            return false;
+        }
         BoardPosition another = (BoardPosition) other;
         return another.x == this.x && another.y == this.y;
     }
