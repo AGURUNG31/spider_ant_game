@@ -11,7 +11,7 @@ public class Game {
 
         //get value of userInput from user
         Scanner reader = new Scanner(System.in);  // Reading from System.in
-        System.out.print("Enter a number:\n 1= BFS,\n 2 = DFS,\n Quit: anything else");
+        System.out.print("Enter a number:\n 1= BFS,\n 2 = DFS,\n Quit: anything else:  ");
         int userInput = reader.nextInt();
         reader.close();
 

@@ -22,26 +22,30 @@ class ShortestPath {
         //Queue of nodes to visit
         Queue<BoardPosition> queue = new LinkedList<>();
 
-        //initially add the starting node
+        //initially add the starting node with parent null
         parentNode.put(startPos, null);
-        queue.add(startPos);
+        queue.add(startPos);// add the node to queue
 
         //Breadth first search
-        while (queue.peek() != null) //check if anymore nodes to visit
-        {
-            BoardPosition currentPosition = queue.poll();
+        //check if anymore nodes to visit
+        while (queue.peek() != null) {
+            BoardPosition currentPosition = queue.poll();// return and remove the element at the front
 
             if (currentPosition.equals(endPos)) {
-                break; //we have reached the end position on the graph via the shortest path so stop searching
+                break; //we have reached the end position on the graph via the shortest path so break out of while loop
             }
 
-            //otherwise get adjacent nodes (possible moves from current position for spider)
+            //otherwise get adjacent nodes (possible moves from current position for spider
+            //possible moves of a spider at a particular location is stored in this arraylist
             ArrayList<BoardPosition> nextPositions = spider.validMovePositions(currentPosition);
+
+            //iterate through each valid position of the spider
+            //nextPositions is the arraylist we just created
             for (BoardPosition adjacentPosition : nextPositions) {
                 //if this adjacent nodes is one that hasn't been visited add it to the queue
                 //also keep track of the adjacent node's parent (the current node)
                 if (!parentNode.containsKey(adjacentPosition)) {
-                    parentNode.put(adjacentPosition, currentPosition);
+                    parentNode.put(adjacentPosition, currentPosition);//currentPoiition is parent and adjacentPosition is child
                     queue.add(adjacentPosition);
                 }
             }
@@ -63,22 +67,28 @@ class ShortestPath {
         }
 
         System.out.println("ShortestPath BFS = " + shortestPath.trim());
+//        System.out.println("-------------------------------");
+//        for(BoardPosition key:parentNode.keySet()){
+//            System.out.println(key +"-->"+ parentNode.get(key) );
+//        }
         //Print out the shortest path found, excluding start position and including end position
         return Arrays.asList(shortestPath.trim().split(" "));
+
+
     }
 
     List<String> dfs() {
-        //Keep track of visited nodes and the parents of visited nodes (for finding the shortest path)
+        //Keep track of visited nodes and the parents of visited nodes
         HashMap<BoardPosition, BoardPosition> parentNode = new HashMap<>();
 
-        //Queue of nodes to visit
+
         Stack<BoardPosition> stack = new Stack<>();
 
         //initially add the starting node
         parentNode.put(startPos, null);
         stack.add(startPos);
 
-        //Breadth first search
+
         while (!stack.isEmpty()) //check if anymore nodes to visit
         {
             BoardPosition currentPosition = stack.pop();
@@ -87,7 +97,7 @@ class ShortestPath {
                 break; //we have reached the end position on the graph via the shortest path so stop searching
             }
 
-            //otherwise get adjacent nodes (possible moves from current position for spider)
+
             ArrayList<BoardPosition> nextPositions = spider.validMovePositions(currentPosition);
             for (BoardPosition adjacentPosition : nextPositions) {
                 //if this adjacent nodes is one that hasn't been visited add it to the queue
@@ -99,8 +109,7 @@ class ShortestPath {
             }
         }
 
-        //traverse back from end position coordinate to start position using the parent map to get shortest path
-        //build up string of shortest path at same time
+
         BoardPosition currentNode = endPos; //start at the end node
         String shortestPath = "";
         while (parentNode.get(currentNode) != null) //stop once we are at the start node

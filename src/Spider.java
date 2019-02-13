@@ -6,6 +6,11 @@ import java.util.*;
 
 class Spider {
 
+    /**
+     * given a position of the spider, it gives all the valid position of the spider within the board
+     * @param startPosition of type BoardPosition
+     * @return validCoordinates - an array list of tyoe BoardPosition
+     */
     ArrayList<BoardPosition> validMovePositions(BoardPosition startPosition) {
         ArrayList<BoardPosition> validCoordinates = new ArrayList<>();
 

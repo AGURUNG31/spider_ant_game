@@ -1,7 +1,7 @@
 import java.util.Random;
 
 /**
- * // BoardPosition provides an abstraction for valid chess position on a square chess board of square BOARD_SIZE
+ * // 
  */
 class BoardPosition {
 
