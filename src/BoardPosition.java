@@ -3,6 +3,9 @@ import java.util.Random;
 /**
  * // 
  */
+
+
+
 class BoardPosition {
 
     public int x;
