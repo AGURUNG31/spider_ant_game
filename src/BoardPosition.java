@@ -1,11 +1,8 @@
 import java.util.Random;
 
 /**
- * // 
+ * //
  */
-
-
-
 class BoardPosition {
 
     public int x;
@@ -20,31 +17,6 @@ class BoardPosition {
         y = getRandom();
     }
 
-    //Maps the integer horizontal co-ordinates to constant letter representations
-    private enum AlgebraicXCoordinate {
-        A(1), B(2), C(3), D(4), E(5), F(6), G(7), H(8);
-
-        private int xCoordinate;
-
-        //Map each enum value to an integer representing the x-coordinate
-        AlgebraicXCoordinate(final int coordinate) {
-            this.xCoordinate = coordinate;
-        }
-
-        public int getValue() {
-            return this.xCoordinate;
-        }
-
-        public static AlgebraicXCoordinate fromInt(int coordinate) {
-            for (AlgebraicXCoordinate algebraCoordinate : AlgebraicXCoordinate.values()) {
-                if (coordinate == algebraCoordinate.getValue()) {
-                    return algebraCoordinate;
-                }
-            }
-
-            throw new IllegalArgumentException("Invalid position ");
-        }
-    }
 
     //Throws IllegalArgumentException if invalid co-ordinate range
     public BoardPosition(int xCoordinate, int yCoordinate) throws IllegalArgumentException {
@@ -56,16 +28,16 @@ class BoardPosition {
         }
     }
 
-    public BoardPosition(String algebraCoordinate) throws IllegalArgumentException {
-        if (algebraCoordinate.length() == 2) {
+    public BoardPosition(String coordinates) throws IllegalArgumentException {
+        if (coordinates.length() == 2) {
             try {
-                x = AlgebraicXCoordinate.valueOf(algebraCoordinate.substring(0, 1).toUpperCase()).getValue(); //Use AlgebraicXCoordinate enum
+                x = Integer.parseInt(coordinates.substring(0, 1));
             } catch (IllegalArgumentException e) {
                 throw new IllegalArgumentException("Invalid x co-ordinate." );
             }
 
             try {
-                y = Integer.parseInt(algebraCoordinate.substring(1));
+                y = Integer.parseInt(coordinates.substring(1));
             } catch (NumberFormatException e) {
                 throw new IllegalArgumentException("Invalid y co-ordinate. " );
             }
@@ -114,7 +86,7 @@ class BoardPosition {
 
 
     public String toString() {
-        String xCoordinate = AlgebraicXCoordinate.fromInt(this.x).name();
+        String xCoordinate = String.valueOf(this.x);
         String yCoordinate = String.valueOf(this.y);
         return (xCoordinate + yCoordinate);
     }

@@ -28,6 +28,7 @@ public class Game {
         GameBoard gameBoard = new GameBoard(antPos.x, antPos.y, spiderPos.x, spiderPos.y);
 
         Spider spider = new Spider();
+        List<BoardPosition> finalPath = new ArrayList<>(); //this holds the final path that will lead to catching the ant
 
         //do until the spider catches the ant
         while (!gameBoard.hasSpiderCaughtAnt()) {
@@ -54,15 +55,17 @@ public class Game {
                     throw new RuntimeException("A* not implemented");
             }
 
-            List<String> spiderLegalMovesString = spider.validMoves(spiderPos); //get all legal moves of spider
-            String spiderNextMove = spider.nextMove(shortestPaths, spiderLegalMovesString);
+            //List<String> spiderLegalMovesString = spider.validMoves(spiderPos); //get all legal moves of spider
+            //String spiderNextMove = spider.nextMove(shortestPaths, spiderLegalMovesString);
 
             //System.out.println("\n"+shortestPaths);//for debug purpose
-            System.out.println("\nSpiders next move = " + spiderNextMove);
-
-//            spiderPos = new BoardPosition(spiderNextMove);
+            //System.out.println("\nSpiders next move = " + spiderNextMove);
+//
+//            spiderPos = new BoardPosition(spiderNextMove);//debug
+//            System.out.println(spiderPos);//debug
             spiderPos = new BoardPosition(shortestPaths.get(0));
-
+            finalPath.add(spiderPos);
+            System.out.println("\nSpider next move = " + spiderPos);
             //get new boardView with new location of spider and ant
             antPos = gameBoard.antNextMove();
             gameBoard.updateLocations(antPos.x, antPos.y, spiderPos.x, spiderPos.y);
@@ -72,6 +75,17 @@ public class Game {
         System.out.println("Spider caught ANT");
         System.out.println("Spider location = " + spiderPos);
         System.out.println("Ant location = " + antPos);
-    }
+        System.out.println("final path from bfs is  " );
 
-}
+        System.out.print("final path from bfs is:  ");
+
+        StringBuilder pathString = new StringBuilder();
+        pathString.append(finalPath.get(0));
+        finalPath.remove(0);
+        for(BoardPosition position: finalPath){
+            pathString.append(" -> ").append(position);
+        }
+        System.out.println(pathString);
+    }//end of main
+
+}//end of class Game
