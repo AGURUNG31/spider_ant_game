@@ -40,13 +40,17 @@ public class GameBoard {
      * update the grid elements
      */
     private void updateGrid() {
+        String ANSI_RED = "\u001B[31m";
+        String ANSI_BLUE = "\u001B[34m";
+        String ANSI_RESET = "\u001B[0m";
+
         for (int row = 0; row < BoardPosition.BOARD_SIZE; row++) {
             for (int col = 0; col < BoardPosition.BOARD_SIZE; col++) {
 
                 if ((row == antRow - 1) && (col == antCol - 1)) {
-                    grid[row][col] = "A";
+                    grid[row][col] = ANSI_BLUE + "A" + ANSI_RESET;
                 } else if ((row == spiderRow - 1) && (col == spiderCol - 1)) {
-                    grid[row][col] = "S";
+                    grid[row][col] = ANSI_RED + "S" + ANSI_RESET;
                 } else {
                     grid[row][col] = "E";
                 }
@@ -76,6 +80,7 @@ public class GameBoard {
 
     /**
      * returns true if spider and ant location is same
+     *
      * @return a boolean
      */
     public boolean hasSpiderCaughtAnt() {
