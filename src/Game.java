@@ -23,29 +23,19 @@ public class Game {
             reader.close();
         }
 
-        //uncomment these two lines for testing
-        //next 4 lines are only for testing
-//        String spiderLoc = "11";
-//        String antLoc = "81";
-//        BoardPosition antPos = new BoardPosition(antLoc);
-//        BoardPosition spiderPos = new BoardPosition(spiderLoc);
-
         //Ant and Spider get initiated at random positions
-        //comment these two lines for testing
         BoardPosition antPos = new BoardPosition(); //antPos gets x,y as their attributes
         BoardPosition spiderPos = new BoardPosition();
 
         GameBoard gameBoard = new GameBoard(antPos.x, antPos.y, spiderPos.x, spiderPos.y);
-
+        gameBoard.print();
         Spider spider = new Spider();
         List<BoardPosition> finalPath = new ArrayList<>(); //this holds the final path that will lead to catching the ant
 
         //do until the spider catches the ant
         while (!gameBoard.hasSpiderCaughtAnt()) {
             System.out.println("=========================================");
-            System.out.println("Spider location = " + spiderPos);
-            System.out.println("Ant location = " + antPos);
-            gameBoard.print();
+            System.out.println("Spider location = " + spiderPos + ", Ant location = " + antPos);
 
             ShortestPath shortestPath = new ShortestPath(spiderPos, antPos, spider);
             List<String> shortestPaths;
@@ -71,33 +61,22 @@ public class Game {
                     throw new RuntimeException("A* not implemented");
             }
 
-            //List<String> spiderLegalMovesString = spider.validMoves(spiderPos); //get all legal moves of spider
-            //String spiderNextMove = spider.nextMove(shortestPaths, spiderLegalMovesString);
-
-            //System.out.println("\n"+shortestPaths);//for debug purpose
-            //System.out.println("\nSpiders next move = " + spiderNextMove);
-//
-//            spiderPos = new BoardPosition(spiderNextMove);//debug
-//            System.out.println(spiderPos);//debug
             spiderPos = new BoardPosition(shortestPaths.get(0));
             finalPath.add(spiderPos);
             System.out.println("\nSpider next move = " + spiderPos);
             gameBoard.updateLocations(antPos.x, antPos.y, spiderPos.x, spiderPos.y);
+
             //get new boardView with new location of spider and ant
             if (!gameBoard.hasSpiderCaughtAnt()) {
                 antPos = gameBoard.antNextMove();
 
             }
-
-            gameBoard.updateLocations(antPos.x, antPos.y, spiderPos.x, spiderPos.y);
-
+            gameBoard.print();
         }
         System.out.println("=========================================");
         System.out.println("Spider caught ANT");
         System.out.println("Spider location = " + spiderPos);
         System.out.println("Ant location = " + antPos);
-
-
         System.out.print("final path from source is:  ");
 
         StringBuilder pathString = new StringBuilder();

@@ -89,7 +89,6 @@ class ShortestPath {
         parentNode.put(startPos, null);
         stack.add(startPos);
 
-
         while (!stack.isEmpty()) //check if anymore nodes to visit
         {
             BoardPosition currentPosition = stack.pop();
@@ -97,7 +96,6 @@ class ShortestPath {
             if (currentPosition.equals(endPos)) {
                 break;
             }
-
 
             ArrayList<BoardPosition> nextPositions = spider.validMovePositions(currentPosition);
             for (BoardPosition adjacentPosition : nextPositions) {
@@ -109,7 +107,6 @@ class ShortestPath {
                 }
             }
         }
-
 
         BoardPosition currentNode = endPos; //start at the end node
         String shortestPath = "";
