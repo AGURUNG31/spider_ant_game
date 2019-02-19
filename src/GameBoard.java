@@ -2,7 +2,7 @@ import java.util.Random;
 
 public class GameBoard {
 
-    private static String[][] grid = new String[8][8];
+    private static String[][] grid = new String[BoardPosition.BOARD_SIZE][BoardPosition.BOARD_SIZE];
     private int antRow;
     private int antCol;
 
@@ -19,7 +19,7 @@ public class GameBoard {
         this.spiderRow = spiderRow;
         this.spiderCol = spiderCol;
         updateGrid();
-        this.antDirection = randomDirection();
+        this.antDirection = randomDirection();///change it to Antdirection.RIGHT TO TEST IT
         System.out.println("Ant created, it will move in `" + antDirection.name() + "` direction for this lifecycle");
     }
 
@@ -40,8 +40,8 @@ public class GameBoard {
      * update the grid elements
      */
     private void updateGrid() {
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
+        for (int row = 0; row < BoardPosition.BOARD_SIZE; row++) {
+            for (int col = 0; col < BoardPosition.BOARD_SIZE; col++) {
 
                 if ((row == antRow - 1) && (col == antCol - 1)) {
                     grid[row][col] = "A";
@@ -56,7 +56,7 @@ public class GameBoard {
 
     //gives a random number between 0 and 7 inclusive
     static int giveRandomCoordinate() {
-        int max = 8;
+        int max = BoardPosition.BOARD_SIZE;
         int min = 1;
         return new Random().nextInt((max - min) + 1) + min;
     }
@@ -66,8 +66,8 @@ public class GameBoard {
      */
     public void print() {
 
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
+        for (int row = 0; row < BoardPosition.BOARD_SIZE; row++) {
+            for (int col = 0; col < BoardPosition.BOARD_SIZE; col++) {
                 System.out.print("| " + grid[row][col] + "  ");
             }
             System.out.println();
@@ -91,7 +91,7 @@ public class GameBoard {
     void resetAnt() {
         this.antRow = giveRandomCoordinate();
         this.antCol = giveRandomCoordinate();
-        this.antDirection = randomDirection();
+        this.antDirection = randomDirection();//change it to Antdirection.RIGHT TO TEST IT
         System.out.println("Ant is reset, it will move in `" + antDirection.name() + "` direction.");
         System.out.println("Ant location Row = " + this.antRow);
         System.out.println("Ant location Col = " + this.antCol);

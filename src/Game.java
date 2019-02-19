@@ -11,17 +11,27 @@ public class Game {
 
         //get value of userInput from user
         Scanner reader = new Scanner(System.in);  // Reading from System.in
-        System.out.print("Enter a number:\n 1= BFS,\n 2 = DFS,\n Quit: anything else:  ");
+        System.out.print("Enter a number:\n 1= BFS,\n 2 = DFS, \n 3 = A* Search,\n Quit: anything else:  ");
         int userInput = reader.nextInt();
-        reader.close();
+        //reader.close();
 
+        int userInputH = 0;
+        if (3 == userInput) {
+           // Scanner readerH = new Scanner(System.in);  // Reading from System.in
+            System.out.print("Enter a h number:\n 1 - Euclidean,\n 2 - Custom , \n 3 - Average,\n Quit: anything else:  ");
+            userInputH = reader.nextInt();
+            reader.close();
+        }
+
+        //uncomment these two lines for testing
         //next 4 lines are only for testing
-//        String spiderLoc = "E1";
-//        String antLoc = "A7";
+//        String spiderLoc = "11";
+//        String antLoc = "81";
 //        BoardPosition antPos = new BoardPosition(antLoc);
 //        BoardPosition spiderPos = new BoardPosition(spiderLoc);
 
         //Ant and Spider get initiated at random positions
+        //comment these two lines for testing
         BoardPosition antPos = new BoardPosition(); //antPos gets x,y as their attributes
         BoardPosition spiderPos = new BoardPosition();
 
@@ -51,6 +61,12 @@ public class Game {
                     shortestPaths = shortestPath.dfs();
                     break;
                 }
+                case 3: {
+                    System.out.println("Doing A* search");
+
+                    shortestPaths = shortestPath.aStarSearch(userInputH);
+                    break;
+                }
                 default:
                     throw new RuntimeException("A* not implemented");
             }
@@ -66,8 +82,13 @@ public class Game {
             spiderPos = new BoardPosition(shortestPaths.get(0));
             finalPath.add(spiderPos);
             System.out.println("\nSpider next move = " + spiderPos);
+            gameBoard.updateLocations(antPos.x, antPos.y, spiderPos.x, spiderPos.y);
             //get new boardView with new location of spider and ant
-            antPos = gameBoard.antNextMove();
+            if (!gameBoard.hasSpiderCaughtAnt()) {
+                antPos = gameBoard.antNextMove();
+
+            }
+
             gameBoard.updateLocations(antPos.x, antPos.y, spiderPos.x, spiderPos.y);
 
         }
@@ -75,14 +96,14 @@ public class Game {
         System.out.println("Spider caught ANT");
         System.out.println("Spider location = " + spiderPos);
         System.out.println("Ant location = " + antPos);
-        System.out.println("final path from bfs is  " );
 
-        System.out.print("final path from bfs is:  ");
+
+        System.out.print("final path from source is:  ");
 
         StringBuilder pathString = new StringBuilder();
         pathString.append(finalPath.get(0));
         finalPath.remove(0);
-        for(BoardPosition position: finalPath){
+        for (BoardPosition position : finalPath) {
             pathString.append(" -> ").append(position);
         }
         System.out.println(pathString);

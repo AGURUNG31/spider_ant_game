@@ -67,7 +67,7 @@ class ShortestPath {
             shortestPath = startPos.toString();
         }
 
-        System.out.println("ShortestPath BFS(next step) from  "+ startPos +" to " + endPos+ " = " + shortestPath.trim());
+        System.out.println("ShortestPath BFS(next step) from  " + startPos + " to " + endPos + " = " + shortestPath.trim());
 //        System.out.println("-------------------------------");
 //        for(BoardPosition key:parentNode.keySet()){
 //            System.out.println(key +"-->"+ parentNode.get(key) );
@@ -127,6 +127,136 @@ class ShortestPath {
         System.out.println("ShortestPath DFS = " + shortestPath.trim());
         //Print out the shortest path found, excluding start position and including end position
         return Arrays.asList(shortestPath.trim().split(" "));
+    }
+
+    private double distance(BoardPosition spider, BoardPosition ant, int h) {
+        switch (h) {
+            case 1:
+                return distance1(spider, ant);
+            case 2:
+                return distance2(spider, ant);
+            case 3: {
+                return ((distance1(spider, ant)) + (distance2(spider, ant))) / 2;
+            }
+            default:
+                throw new RuntimeException("Invalid heuristic option : " + h);
+        }
+    }
+
+    /**
+     * computes Euclidian distance between two nodes
+     *
+     * @param spiderPos
+     * @param antPos
+     * @return
+     */
+    private double distance1(BoardPosition spiderPos, BoardPosition antPos) {
+        int x = Math.abs(spiderPos.x - antPos.x);
+        int y = Math.abs(spiderPos.y - antPos.y);
+        return Math.sqrt((x * x) + (y * y));
+    }
+
+    private double distance2(BoardPosition spiderPos, BoardPosition antPos) {
+        int x = Math.abs(spiderPos.x - antPos.x);
+        int y = Math.abs(spiderPos.y - antPos.y);
+        if (y > 0) {
+            return x / y;
+        }
+        return x;
+    }
+
+    List<String> aStarSearch(int heuristic) {
+        HashMap<BoardPosition, BoardPosition> parentNode = new HashMap<>();
+        Set<BoardPosition> explored = new HashSet<>();
+
+        //override compare method
+        PriorityQueue<BoardPosition> queue = new PriorityQueue<>(20,
+                (i, j) -> {
+                    if (i.f_scores > j.f_scores) {
+                        return 1;
+                    } else if (i.f_scores < j.f_scores) {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
+                }
+        );
+
+        //cost from start
+        startPos.g_scores = 0;
+
+        queue.add(startPos);
+
+        boolean found = false;
+
+        while ((!queue.isEmpty()) && (!found)) {
+
+            //the node in having the lowest f_score value
+            BoardPosition current = queue.poll();
+
+            explored.add(current);
+
+            //goal found
+            if ((current.x == endPos.x) && (current.y == endPos.y)) {
+                found = true;
+            }
+
+            //check every child of current node
+            ArrayList<BoardPosition> nextPositions = spider.validMovePositions(current);
+            for (BoardPosition child : nextPositions) {
+
+                double temp_f_scores = depthOfNode(child, parentNode) + distance(child, endPos, heuristic);// COST + heuristic function
+
+                /*if child node has been evaluated and the newer f_score is higher, skip*/
+                if ((explored.contains(child))) {
+                    continue;
+                }
+
+                /*else if child node is not in queue */
+
+                else if ((!queue.contains(child))) {
+
+                    parentNode.put(child, current);
+                    //child.g_scores = temp_g_scores;
+                    child.f_scores = temp_f_scores;
+
+                    if (queue.contains(child)) {
+                        queue.remove(child);
+                    }
+
+                    queue.add(child);
+
+                }
+
+            }
+
+        }//end of while
+        List<String> path = new ArrayList<>();
+        for (BoardPosition node = endPos; node != null; node = parentNode.get(node)) {
+            path.add(node.toString());
+        }
+
+        System.out.print("A* path = ");
+        Collections.reverse(path);
+        for (int i = 0; i < path.size(); i++) {
+            System.out.print(path.get(i));
+            if (i != (path.size() - 1)) {
+                System.out.print(" -> ");
+            }
+        }
+        path.remove(0);
+        return path;
+
+    }
+
+    public int depthOfNode(BoardPosition child, HashMap<BoardPosition, BoardPosition> parentNode) {
+        int depth = 0;
+        while (parentNode.get(child) != null) {//if the parent is null top of the node
+            depth++;
+            child = parentNode.get(child);
+        }
+
+        return depth;
     }
 
 }

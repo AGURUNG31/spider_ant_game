@@ -8,6 +8,8 @@ class BoardPosition {
     public int x;
     public int y;
     public static int BOARD_SIZE = 8;
+    public double g_scores;
+    public double f_scores = 0;
 
     /**
      * Assumes the x and y are generated randomly
@@ -31,7 +33,7 @@ class BoardPosition {
     public BoardPosition(String coordinates) throws IllegalArgumentException {
         if (coordinates.length() == 2) {
             try {
-                x = Integer.parseInt(coordinates.substring(0, 1));
+                x = Integer.parseInt(coordinates.substring(0, 1)); // convert the coordinates in string to int to take the x coordinate
             } catch (IllegalArgumentException e) {
                 throw new IllegalArgumentException("Invalid x co-ordinate." );
             }
@@ -39,7 +41,7 @@ class BoardPosition {
             try {
                 y = Integer.parseInt(coordinates.substring(1));
             } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("Invalid y co-ordinate. " );
+                throw new IllegalArgumentException("Invalid y co-ordinate. " );//convert the coordinates in string to int to take the y coordinate
             }
 
             if (!isValidCoordinate(x, y)) {
@@ -58,7 +60,7 @@ class BoardPosition {
 
     }
 
-    //When does one BoardPosition equal another BoardPosition
+    // one BoardPosition equal another BoardPosition
     //Required method to override for use with 'contains' in collections
     //
     //Returns boolean
@@ -92,7 +94,7 @@ class BoardPosition {
     }
 
     static int getRandom() {
-        int max = 8;
+        int max = BOARD_SIZE;
         int min = 1;
         return new Random().nextInt((max - min) + 1) + min;
     }
